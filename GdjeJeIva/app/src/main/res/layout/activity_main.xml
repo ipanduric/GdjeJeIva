@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zadaca.ipanduric.gdjejeiva.MainActivity">
+
+    <fragment
+        android:id="@+id/fGoogleMap"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MapLocationActivity"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/tvLocationInfo"
+        android:layout_alignRight="@+id/ibTakePhoto"
+        android:layout_alignEnd="@+id/ibTakePhoto" />
+
+    <TextView
+        android:id="@+id/tvLocationInfo"
+        android:layout_width="@dimen/tvSize"
+        android:layout_height="@dimen/tvSizeh"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="3sp"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textAlignment="center"/>
+
+    <ImageButton
+        android:id="@+id/ibTakePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ib_photo"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/tvLocationInfo"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/tvLocationInfo"
+        android:layout_toRightOf="@+id/tvLocationInfo" />
+
+</RelativeLayout>
