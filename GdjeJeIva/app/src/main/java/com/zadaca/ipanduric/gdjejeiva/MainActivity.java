@@ -2,13 +2,17 @@ package com.zadaca.ipanduric.gdjejeiva;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +52,9 @@ GoogleApiClient.OnConnectionFailedListener {
     TextView tvLocationInfo;
     ImageButton ibTakePhoto;
 
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,14 +64,21 @@ GoogleApiClient.OnConnectionFailedListener {
         this.SetUpUI();
     }
 
+
     private void SetUpUI() {
         ibTakePhoto = (ImageButton) this.findViewById(R.id.ibTakePhoto);
         tvLocationInfo = (TextView) this.findViewById(R.id.tvLocationInfo);
 
         ibTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
 
+                if (checkSelfPermission(Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA},
+                            MY_CAMERA_REQUEST_CODE);
+                }
             }
         });
     }
@@ -202,6 +216,7 @@ GoogleApiClient.OnConnectionFailedListener {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
+
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
@@ -225,9 +240,25 @@ GoogleApiClient.OnConnectionFailedListener {
                     // functionality that depends on this permission.
                     Toast.makeText(this, "Permission denied!", Toast.LENGTH_LONG).show();
                 }
+            }
+            //http://stackoverflow.com/questions/38552144/how-get-permission-for-camera-in-android-specifically-marshmallow
+
+                case MY_CAMERA_REQUEST_CODE: {
+
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                        Toast.makeText(this, "Camera permission granted!", Toast.LENGTH_LONG).show();
+
+                    } else {
+
+                        Toast.makeText(this, "Camera permission denied!", Toast.LENGTH_LONG).show();
+
+                    }
                 return;
             }
         }
     }
+
+
 
 }
